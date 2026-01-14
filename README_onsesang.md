@@ -653,6 +653,28 @@ public class FileUtil {
 | **이용약관** | policy/terms.jsp | 약관 |
 | **개인정보처리방침** | policy/privacy.jsp | 개인정보 정책 |
 
+### 스크린샷
+
+| 로그인 | 회원가입 |
+|:------:|:--------:|
+| ![로그인](screenshots/login.JPG) | ![회원가입](screenshots/join.JPG) |
+
+| 마이페이지 | 공지사항 목록 |
+|:----------:|:-------------:|
+| ![마이페이지](screenshots/mypage.JPG) | ![공지목록](screenshots/noticelist.JPG) |
+
+| 공지사항 상세 | 봉사 제공 목록 |
+|:-------------:|:--------------:|
+| ![공지상세](screenshots/noticedetail.JPG) | ![봉사제공목록](screenshots/listVolOffer.JPG) |
+
+| 봉사 제공 상세 | 봉사 요청 목록 |
+|:--------------:|:--------------:|
+| ![봉사제공상세](screenshots/detailVolOffer.JPG) | ![봉사요청목록](screenshots/listVolRequest.JPG) |
+
+| 봉사 요청 상세 |
+|:--------------:|
+| ![봉사요청상세](screenshots/detailVolRequest.JPG) |
+
 ---
 
 ## 실행 방법
