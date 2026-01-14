@@ -1,0 +1,21 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="logo">온세상</span>
+      <span class="tagline">이웃의 손길을 잇다</span>
+    </div>
+    <div class="footer-meta">
+      <p>
+        © <script>document.write(new Date().getFullYear())</script> 온세상 · All rights reserved.
+      </p>
+     <p class="links">
+  <a href="<c:url value='/policy/privacy.jsp'/>">개인정보처리방침</a> ·
+  <a href="<c:url value='/policy/terms.jsp'/>">이용약관</a> ·
+  <a href="<c:url value='/policy/about.jsp'/>">브랜드소개 </a>
+</p>
+    </div>
+  </div>
+</footer>

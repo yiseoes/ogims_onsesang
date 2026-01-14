@@ -1,0 +1,119 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:set var="isLogin" value="${not empty sessionScope.loginUser}" />
+
+<div class="topbar">
+  <div class="container">
+    <!-- 브랜드 -->
+    <div class="brand">
+      <a href="<c:url value='/'/>">온세상</a>
+    </div>
+
+    <!-- 네비게이션 -->
+    <div class="nav">
+      <a href="<c:url value='/listVolRequest.do'/>"><span>마음부탁</span></a>
+      <a href="<c:url value='/listVolOffer.do'/>"><span>손길나눔</span></a>
+      <a href="<c:url value='/listNotice.do'/>"><span>햇살소식</span></a>
+
+      <!-- 로그인 했을 때만 마이페이지 드롭다운 노출 -->
+      <c:if test="${isLogin}">
+        <div class="dropdown">
+          <button type="button" class="dropdown-toggle">마이페이지 ▾</button>
+          <div class="dropdown-menu">
+            <a href="<c:url value='/detailUser.do'/>">내정보보기</a>
+            <a href="<c:url value='/updatePwdView.do'/>">비밀번호변경</a>
+            <!-- 아래 두 경로는 실제 매핑명에 맞게 대소문자 확인해서 조정 -->
+            <a href="<c:url value='/myVolHistory.do'/>">내봉사이력</a>
+            <a href="<c:url value='/myreqHistory.do'/>">내요청이력</a>
+          </div>
+        </div>
+      </c:if>
+
+    <!-- 우측 영역: 로그아웃 먼저, 그 다음 2줄 환영 블록 -->
+<c:choose>
+  <c:when test="${isLogin}">
+    <!-- 우측 맨 끝: 로그아웃 → 인사 문구 -->
+    <a class="logout-link" href="<c:url value='/logout.do'/>"><span>로그아웃</span></a>
+    <span id="userGreet"
+          class="user-greet"
+          data-name="${sessionScope.loginUser.name}">
+      <c:out value="${sessionScope.loginUser.name}"/>님
+    </span>
+  </c:when>
+  <c:otherwise>
+    <a class="login-link" href="<c:url value='/loginView.do'/>"><span>로그인</span></a>
+  </c:otherwise>
+</c:choose>
+
+<script>
+  (function () {
+    var el = document.getElementById('userGreet');
+    if (!el) return;
+
+    var name = (el.dataset.name || '').trim();
+    var original = name ? (name + '님 ') : '함께동행';
+    var hoverTxt = '함께동행';   // 필요시 문구만 바꿔도 됨
+    var DUR = 300;                  // 페이드 타이밍
+
+    // 초기 텍스트를 안전하게 세팅(공백/중복 방지)
+    el.textContent = original;
+
+    function fadeSwap(toText){
+      el.classList.add('fading');
+      setTimeout(function(){
+        el.textContent = toText;
+        el.classList.remove('fading');
+      }, DUR);
+    }
+
+    el.addEventListener('mouseenter', function(){ fadeSwap(hoverTxt); });
+    el.addEventListener('mouseleave', function(){ fadeSwap(original); });
+  })();
+</script>
+<script>
+(function(){
+  const topbar = document.querySelector('.topbar');
+  if(!topbar) return;
+
+  function setPinned(dd, on){
+    dd.classList.toggle('is-pinned', on);
+    const t = dd.querySelector('.dropdown-toggle');
+    if (t) t.setAttribute('aria-expanded', String(on));
+    if (!on) {
+      // 포커스가 남아있으면 :focus-within 때문에 계속 열림 → 전부 blur
+      dd.querySelectorAll('button,a').forEach(el => el.blur());
+    }
+  }
+
+  // 토글 버튼 클릭으로 '고정' ON/OFF
+  topbar.addEventListener('click', function(e){
+    const toggle = e.target.closest('.dropdown-toggle');
+    if(!toggle) return;
+
+    const dd = toggle.closest('.dropdown');
+    const pinned = dd.classList.contains('is-pinned');
+    setPinned(dd, !pinned);
+  });
+
+  // 바깥 클릭 → 고정 해제(원하면 유지해도 됨)
+  document.addEventListener('click', function(e){
+    if (e.target.closest('.topbar .dropdown')) return;
+    document.querySelectorAll('.topbar .dropdown.is-pinned').forEach(dd => setPinned(dd, false));
+  });
+
+  // ESC로도 고정 해제
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.topbar .dropdown.is-pinned').forEach(dd => setPinned(dd, false));
+    }
+  });
+})();
+</script>
+
+
+
+
+    </div>
+  </div>
+</div>
